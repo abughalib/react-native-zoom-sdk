@@ -2,7 +2,7 @@
 
 **PULL REQUEST ARE ALWAYS APPRECIATED**
 
-## Test Aap
+## Test App
 Test app is in ZoomBridge branch of this repo.
 
 ## Installation
