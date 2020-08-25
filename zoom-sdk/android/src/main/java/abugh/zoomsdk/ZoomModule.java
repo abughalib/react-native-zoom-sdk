@@ -33,7 +33,6 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
     * getCurrentActivity() may return null, check null before implementation
     * */
 
-    final private Activity mActivity;
 
     private final static String TAG = "zoomsdk";
     private final ReactApplicationContext reactContext;
@@ -48,12 +47,11 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
         super(reactContext);
         this.reactContext = reactContext;
         //this.mActivity = reactContext.getCurrentActivity(); //Not Public
-        mActivity = getCurrentActivity();
         //this.mActivity = reactContext;
         reactContext.addLifecycleEventListener(this);
-        if(this.mActivity == null)
-            Log.i("mActivity", "It is NULL");
-        else Log.i("mActivity", "Not NULL->"+mActivity.getPackageName());
+//        if(this.mActivity == null)
+//            Log.i("mActivity", "It is NULL");
+//        else Log.i("mActivity", "Not NULL->"+mActivity.getPackageName());
     }
 
     @Override
@@ -76,8 +74,8 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
         try {
             initializePromise = promise;
 
-            if (mActivity != null) {
-                mActivity.runOnUiThread(new Runnable() {
+            if (reactContext.getCurrentActivity() != null) {
+                reactContext.getCurrentActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         /*Initialize Zoom API parameters
@@ -95,7 +93,7 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
                         //params.videoRawDataMemoryMode = ZoomSDKRawDataMemoryMode.ZoomSDKRawDataMemoryModeStack;
                         params.domain = domain;
                         //params.jwtToken = jwtToken;
-                        zoomSDK.initialize(mActivity, ZoomModule.this, params);
+                        zoomSDK.initialize(reactContext.getCurrentActivity(), ZoomModule.this, params);
                         /* Depreciated in v5.0.24437.0708
                         zoomSDK.initialize(mActivity, appKey, appSecret, webDomain, ZoomModule.this);
                          */
@@ -142,7 +140,7 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
                 }
 
                 if(meetingService.getCurrentRtcMeetingNumber() == lMeetingNo) {
-                    meetingService.returnToMeeting(mActivity);
+                    meetingService.returnToMeeting(reactContext.getCurrentActivity());
                     promise.resolve("Already joined zoom meeting");
                     return;
                 }
@@ -157,7 +155,7 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
             params.userType = userType;
             params.zoomAccessToken = zoomAccessToken; //Zoom Token
 
-            int startMeetingResult = meetingService.startMeetingWithParams(mActivity, params, opts);
+            int startMeetingResult = meetingService.startMeetingWithParams(reactContext.getCurrentActivity(), params, opts);
             Log.i(TAG, "startMeeting, startMeetingResult=" + startMeetingResult);
 
             if (startMeetingResult != MeetingError.MEETING_ERROR_SUCCESS) {
@@ -192,7 +190,7 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
             params.displayName = displayName;
             params.meetingNo = meetingNo;
 
-            int joinMeetingResult = meetingService.joinMeetingWithParams(mActivity, params, opts);
+            int joinMeetingResult = meetingService.joinMeetingWithParams(reactContext.getCurrentActivity(), params, opts);
             Log.i(TAG, "joinMeeting, joinMeetingResult=" + joinMeetingResult);
 
             if (joinMeetingResult != MeetingError.MEETING_ERROR_SUCCESS) {
@@ -229,7 +227,7 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
             params.meetingNo = meetingNo;
             params.password = password;
 
-            int joinMeetingResult = meetingService.joinMeetingWithParams(mActivity, params, opts);
+            int joinMeetingResult = meetingService.joinMeetingWithParams(reactContext.getCurrentActivity(), params, opts);
             Log.i(TAG, "joinMeeting, joinMeetingResult=" + joinMeetingResult);
 
             if (joinMeetingResult != MeetingError.MEETING_ERROR_SUCCESS) {

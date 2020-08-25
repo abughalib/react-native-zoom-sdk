@@ -45,8 +45,9 @@ android {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
+        flatDir {
+            dirs "$rootDir/../react-native-zoom-us/android/libs"
+        }
     }
 }
 
@@ -61,7 +62,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.facebook.react:react-native:0.20.1'
+    implementation 'com.facebook.react:react-native:+'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
