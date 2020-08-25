@@ -28,16 +28,8 @@ import us.zoom.sdk.JoinMeetingParams;
 
 public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKInitializeListener, MeetingServiceListener, LifecycleEventListener {
 
-    /* React-Native deprecation
-    * reactContext.getCurrentActivity() is private in latest release
-    * getCurrentActivity() may return null, check null before implementation
-    * */
-
-
     private final static String TAG = "zoomsdk";
     private final ReactApplicationContext reactContext;
-
-    //final private Context mActivity;
 
     private Boolean isInitialized = false;
     private Promise initializePromise;
@@ -46,8 +38,6 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
     public ZoomModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        //this.mActivity = reactContext.getCurrentActivity(); //Not Public
-        //this.mActivity = reactContext;
         reactContext.addLifecycleEventListener(this);
 //        if(this.mActivity == null)
 //            Log.i("mActivity", "It is NULL");
@@ -78,19 +68,12 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
                 reactContext.getCurrentActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        /*Initialize Zoom API parameters
-                        * API KEY
-                        * JwtToken
-                        * DOMAIN -> zoom.us
-                        * LogSize
-                        * */
 
                         ZoomSDKInitParams params = new ZoomSDKInitParams();
                         params.appKey = sdkKey;
                         params.appSecret = sdkSecret;
                         params.enableLog = true;
-                        params.logSize = 500;
-                        //params.videoRawDataMemoryMode = ZoomSDKRawDataMemoryMode.ZoomSDKRawDataMemoryModeStack;
+                        params.logSize = 50;
                         params.domain = domain;
                         //params.jwtToken = jwtToken;
                         zoomSDK.initialize(reactContext.getCurrentActivity(), ZoomModule.this, params);

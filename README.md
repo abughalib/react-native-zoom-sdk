@@ -1,43 +1,249 @@
-# It's a test App in which Zoom npm module is implemented.
+# react-native-zoom-sdk
+
+**PULL REQUEST ARE ALWAYS APPRECIATED**
+
+## Test Aap
+Test app is in ZoomBridge branch of this repo.
 
 ## Installation
 
-**Make sure you have npm installed**
-
-### Dependencies
+**1. Clone this repo in the root directory of your project**
+If you don't have existing project create one then follow along.
 ```
-npm install react-native
-```
-### Clone the repo
-```
-git clone https://github.com/abughalib/react-native-zoom-sdk.git
-
-cd react-native-zoom-sdk
-
-git checkout -b ReactTestApp
-
-```
-### Run it in Virtual/Physical device.
-```
-npm install
-
-react-native run-android
-
+git clone https://github.com/abughalib/react-native-zoom-sdk.git -b master
 ```
 
-## Common Errors
+**2.** ```npm install```
 
-**1. No apps connected**
-```
-Build the android section using gradle with help of android studio.
+### Constants
+```JavaScript
+const config = {
+  zoom: {
+    sdkKey: "", //TODO
+    sdkSecret: "", //TODO
+    domain: "zoom.us",
+    jwtToken:'token' //JWT-Token not required when sdkKey, SdkSecret is used
+  }
+};
 ```
 
-**2. Group policy error in Windows 10**
+### Uses
+
+**Initialization**
+```JavaScript
+async componentDidMount() {
+    try {
+      const initializeResult = await zoomsdk.initialize(
+        config.zoom.sdkKey,
+        config.zoom.sdkSecret,
+        config.zoom.domain,
+        //config.zoom.jwtTokenRaw
+      );
+      console.warn({ initializeResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
 ```
-Use command prompt instead of powershell.
-Or disable the group policy(highly not recommanded)
+**start Meeting**
+```JavaScript
+  meetingNo = ''; //TODO
+  async start() {
+    
+    const displayName = 'Test';
+
+    const userId = 'ABC'; 
+    const userType = zoomUserType;
+    const zoomToken = 'token';
+
+    const zoomAccessToken = "jwtToken";
+
+    try {
+      const startMeetingResult = await zoomsdk.startMeeting(
+        displayName,
+        this.meetingNo,
+        userId,
+        userType,
+        zoomAccessToken,
+        zoomToken
+      );
+      console.warn({ startMeetingResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
+  ```
+**Join Meeting**
+```JavaScript
+async join() {
+    const displayName = 'Test User';
+
+    try {
+      const joinMeetingResult = await zoomsdk.joinMeeting(
+        displayName,
+        this.meetingNo
+      );
+      console.warn({ joinMeetingResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
 ```
-**3. Error while installing react-native**
+**Join Meeting With password**
+```JavaScript
+async joinWithPass() {
+    const displayName = 'Test User';
+    const password = '';
+    try {
+      const joinMeetingResult = await zoomsdk.joinMeetingWithPassword(
+        displayName,
+        this.meetingNo,
+        password
+      );
+      console.warn({ joinMeetingResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
 ```
-Run the installation command in administrator permission in cmd or powershell
+## Example
+```JavaScript
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
+ //NOTE: Don't keep any value to null.
+
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button, TextInput
+} from 'react-native';
+
+import zoomsdk from 'zoom-sdk';
+
+const zoomUserType = 2;
+
+
+const config = {
+  zoom: {
+    sdkKey: "", //TODO
+    sdkSecret: "", //TODO
+    domain: "zoom.us",
+    jwtToken:'token' //JWT-Token not required when sdkKey, SdkSecret is used
+  }
+};
+
+type Props = {};
+export default class App extends Component<Props> {
+
+  meetingNo = ''; //TODO
+
+  async componentDidMount() {
+    try {
+      const initializeResult = await zoomsdk.initialize(
+        config.zoom.sdkKey,
+        config.zoom.sdkSecret,
+        config.zoom.domain,
+        //config.zoom.jwtTokenRaw
+      );
+      console.warn({ initializeResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
+  
+  meetingNo = ''; //TODO
+  async start() {
+    
+    const displayName = 'Test';
+    const userId = 'XYZ'; // NOTE: no need for userId when using JwtToken
+    const userType = zoomUserType;
+    const zoomToken = 'token';
+
+    const zoomAccessToken = "jwtToken";
+
+    try {
+      const startMeetingResult = await zoomsdk.startMeeting(
+        displayName,
+        this.meetingNo,
+        userId,
+        userType,
+        zoomAccessToken,
+        zoomToken
+      );
+      console.warn({ startMeetingResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
+
+  async join() {
+    const displayName = 'Test User';
+
+    try {
+      const joinMeetingResult = await zoomsdk.joinMeeting(
+        displayName,
+        this.meetingNo
+      );
+      console.warn({ joinMeetingResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
+  async joinWithPass() {
+    const displayName = 'Test User';
+    const password = '';
+    try {
+      const joinMeetingResult = await zoomsdk.joinMeetingWithPassword(
+        displayName,
+        this.meetingNo,
+        password
+      );
+      console.warn({ joinMeetingResult });
+    } catch(e) {
+      console.warn({ e });
+    }
+  }
+  
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Button
+          onPress={() => this.start()}
+          title="Start meeting"
+        />
+        <Text>-------</Text>
+        <Button
+          onPress={() => this.join()}
+          title="Join meeting"
+        />
+        <Text>-------</Text>
+        <Button
+          onPress={() => this.joinMeetingWithPassword()}
+          title="Join meeting with Password"
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+});
 ```
+
+## Note:
+**Do not fill any value with null or keep empty it may cause some issue.**
