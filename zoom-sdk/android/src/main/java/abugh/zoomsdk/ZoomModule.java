@@ -47,7 +47,8 @@ public class ZoomModule extends ReactContextBaseJavaModule implements ZoomSDKIni
     public ZoomModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        this.mActivity = getCurrentActivity();
+        //this.mActivity = reactContext.getCurrentActivity(); //Not Public
+        mActivity = getCurrentActivity();
         //this.mActivity = reactContext;
         reactContext.addLifecycleEventListener(this);
         if(this.mActivity == null)
