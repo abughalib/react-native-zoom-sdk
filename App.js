@@ -13,7 +13,7 @@ import {
   StyleSheet,
   View,
   Text,
-  Button
+  Button, TextInput
 } from 'react-native';
 
 import zoomsdk from 'zoom-sdk';
@@ -23,8 +23,8 @@ const zoomUserType = 2;
 
 const config = {
   zoom: {
-    sdkKey: "AppKey", //TODO
-    sdkSecret: "SDK Secret", //TODO
+    sdkKey: "", //TODO
+    sdkSecret: "", //TODO
     domain: "zoom.us",
     jwtToken:'token' //JWT-Token not required when sdkKey, SdkSecret is used
     //meetingNo = "74009434385";
@@ -33,7 +33,7 @@ const config = {
 
 type Props = {};
 export default class App extends Component<Props> {
-  meetingNo = '12334546'; 
+  meetingNo = ''; //TODO
 
   async componentDidMount() {
     try {
