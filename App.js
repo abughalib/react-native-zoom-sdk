@@ -6,6 +6,8 @@
  * @flow strict-local
  */
 
+ //NOTE: Don't keep any value to null.
+
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -18,19 +20,20 @@ import zoomsdk from 'zoom-sdk';
 
 const zoomUserType = 2;
 
+
 const config = {
   zoom: {
-    sdkKey: "",
-    sdkSecret: "",
+    sdkKey: "AppKey", //TODO
+    sdkSecret: "SDK Secret", //TODO
     domain: "zoom.us",
-    jwtToken:''
+    jwtToken:'token' //JWT-Token not required when sdkKey, SdkSecret is used
     //meetingNo = "74009434385";
   }
 };
 
 type Props = {};
 export default class App extends Component<Props> {
-  meetingNo = '74009434385'; 
+  meetingNo = '12334546'; 
 
   async componentDidMount() {
     try {
@@ -72,7 +75,7 @@ export default class App extends Component<Props> {
   }
 
   async join() {
-    const displayName = 'Test student';
+    const displayName = 'Test User';
 
     try {
       const joinMeetingResult = await zoomsdk.joinMeeting(
@@ -88,11 +91,6 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          title="Initialize Zoom"
-          onPress={()=> this.componentDidMount()}
-        />
-        <Text>------</Text>
         <Button
           onPress={() => this.start()}
           title="Start example meeting"
