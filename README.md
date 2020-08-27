@@ -10,7 +10,7 @@ Test app is in ZoomBridge branch of this repo.
 **1. Clone this repo in the root directory of your project**
 If you don't have existing project create one then follow along.
 ```
-git clone https://github.com/abughalib/react-native-zoom-sdk.git -b master
+git clone https://github.com/abughalib/zoom-sdk.git -b master
 ```
 
 **2.** ```npm install```
