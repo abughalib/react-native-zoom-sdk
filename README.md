@@ -227,7 +227,7 @@ export default class App extends Component<Props> {
         />
         <Text>-------</Text>
         <Button
-          onPress={() => this.joinMeetingWithPassword()}
+          onPress={() => this.joinWithPass()}
           title="Join meeting with Password"
         />
       </View>
