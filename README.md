@@ -1,18 +1,9 @@
-# react-native-zoom-sdk -->*Under development*
+# React-Native Zoom SDK
+
+## Kotlin Version
+
+Same feature as the java version with kotlin skin.
 
 ## Installation
 
-**Clone this repo**
-```
-git clone https://github.com/abughalib/react-native-zoom-sdk.git -b dev
-```
-**Save it in node_module for global**
-```
-npm install react-native-zoom-sdk --save
-```
-
-## Testing Part is not yet done.
-
-## Readme.md is to update.
-
-Minimal Version of this->https://github.com/zoom/zoom-sdk-android
+**REFER TO MASTER BRANCH**
