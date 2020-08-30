@@ -29,7 +29,9 @@ GradleBuildTool :v4.0.1
 Test app is in ZoomBridge branch of this repo.
 
 ## Features
-
+1. Start Zoom Meeting
+2. Join Zoom Meeting
+3. Join Zoom Meeting with Password 
 
 ## Installation
 
